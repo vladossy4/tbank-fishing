@@ -1,4 +1,4 @@
-package com.salfetka.fishing.ui.notifications;
+package com.salfetka.fishing.ui.wiki;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,22 +10,22 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.salfetka.fishing.databinding.FragmentNotificationsBinding;
+import com.salfetka.fishing.databinding.FragmentWikiBinding;
 
-public class NotificationsFragment extends Fragment {
+public class WikiFragment extends Fragment {
 
-    private FragmentNotificationsBinding binding;
+    private FragmentWikiBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        NotificationsViewModel notificationsViewModel =
-                new ViewModelProvider(this).get(NotificationsViewModel.class);
+        WikiViewModel wikiViewModel =
+                new ViewModelProvider(this).get(WikiViewModel.class);
 
-        binding = FragmentNotificationsBinding.inflate(inflater, container, false);
+        binding = FragmentWikiBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textNotifications;
-        notificationsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        final TextView textView = binding.textDashboard;
+        wikiViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 

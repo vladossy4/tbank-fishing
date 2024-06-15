@@ -1,16 +1,16 @@
-package com.salfetka.fishing.ui.dashboard;
+package com.salfetka.fishing.ui.discussions;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class DashboardViewModel extends ViewModel {
+public class DiscussionsViewModel extends ViewModel {
 
     private final MutableLiveData<String> mText;
 
-    public DashboardViewModel() {
+    public DiscussionsViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is dashboard fragment");
+        mText.setValue("This is discussions fragment");
     }
 
     public LiveData<String> getText() {

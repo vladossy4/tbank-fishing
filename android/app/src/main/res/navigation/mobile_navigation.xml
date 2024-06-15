@@ -3,23 +3,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/navigation_weather">
 
     <fragment
-        android:id="@+id/navigation_home"
-        android:name="com.salfetka.fishing.ui.home.HomeFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        android:id="@+id/navigation_weather"
+        android:name="com.salfetka.fishing.ui.weather.WeatherFragment"
+        android:label="@string/title_weather"
+        tools:layout="@layout/fragment_weather" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.salfetka.fishing.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:id="@+id/navigation_wiki"
+        android:name="com.salfetka.fishing.ui.wiki.WikiFragment"
+        android:label="@string/title_wiki"
+        tools:layout="@layout/fragment_wiki" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.salfetka.fishing.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:id="@+id/navigation_discussions"
+        android:name="com.salfetka.fishing.ui.discussions.DiscussionsFragment"
+        android:label="@string/title_discussions"
+        tools:layout="@layout/fragment_wiki" />
+
+    <fragment
+        android:id="@+id/navigation_profile"
+        android:name="com.salfetka.fishing.ui.profile.ProfileFragment"
+        android:label="@string/title_profile"
+        tools:layout="@layout/fragment_profile" />
 </navigation>
