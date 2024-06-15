@@ -7,4 +7,11 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="weather_cloud">#91A0C8</color>
+    <color name="weather_cloud_line">#B1C6DF</color>
+    <color name="weather_rain">#002198</color>
+    <color name="weather_snow">#DFDFDF</color>
+    <color name="weather_thunder">#FFC107</color>
+    <color name="weather_sun">#FFDD00</color>
 </resources>

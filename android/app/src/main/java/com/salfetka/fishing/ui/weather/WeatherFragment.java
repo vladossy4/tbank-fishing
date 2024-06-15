@@ -24,8 +24,12 @@ public class WeatherFragment extends Fragment {
         binding = FragmentWeatherBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textHome;
-        weatherViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        final TextView textDay = binding.textDay;
+        final TextView mainTemperature = binding.mainTemperature;
+        final TextView mainWeather = binding.mainWeather;
+        weatherViewModel.getTextDay().observe(getViewLifecycleOwner(), textDay::setText);
+        weatherViewModel.getMainTemperature().observe(getViewLifecycleOwner(), mainTemperature::setText);
+        weatherViewModel.getMainWeather().observe(getViewLifecycleOwner(), mainWeather::setText);
         return root;
     }
 

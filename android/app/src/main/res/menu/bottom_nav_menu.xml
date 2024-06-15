@@ -3,22 +3,22 @@
 
     <item
         android:id="@+id/navigation_weather"
-        android:icon="@drawable/ic_weather_black_24dp"
+        android:icon="@drawable/ic_nav_weather_24dp"
         android:title="@string/title_weather" />
 
     <item
         android:id="@+id/navigation_wiki"
-        android:icon="@drawable/ic_wiki_book_black_24dp"
+        android:icon="@drawable/ic_nav_wiki_book_24dp"
         android:title="@string/title_wiki" />
 
     <item
         android:id="@+id/navigation_discussions"
-        android:icon="@drawable/ic_chat_black_24dp"
+        android:icon="@drawable/ic_nav_chat_24dp"
         android:title="@string/title_discussions" />
 
     <item
         android:id="@+id/navigation_profile"
-        android:icon="@drawable/ic_account_profile_black_24dp"
+        android:icon="@drawable/ic_nav_account_profile_24dp"
         android:title="@string/title_profile" />
 
 </menu>
