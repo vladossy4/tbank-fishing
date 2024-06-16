@@ -8,9 +8,11 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.salfetka.fishing.databinding.FragmentWeatherBinding;
+import com.salfetka.fishing.models.Weather;
 
 public class WeatherFragment extends Fragment {
 
@@ -24,12 +26,20 @@ public class WeatherFragment extends Fragment {
         binding = FragmentWeatherBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textDay = binding.textDay;
-        final TextView mainTemperature = binding.mainTemperature;
-        final TextView mainWeather = binding.mainWeather;
-        weatherViewModel.getTextDay().observe(getViewLifecycleOwner(), textDay::setText);
-        weatherViewModel.getMainTemperature().observe(getViewLifecycleOwner(), mainTemperature::setText);
-        weatherViewModel.getMainWeather().observe(getViewLifecycleOwner(), mainWeather::setText);
+        final TextView lastUpdatedWeather = binding.lastUpdatedWeather;
+        final TextView currentTemperature = binding.currentTemperature;
+        final TextView currentWeather = binding.currentWeather;
+        final TextView maxTemperature = binding.maxTemperature;
+        final TextView minTemperature = binding.minTemperature;
+        weatherViewModel.getWeather().observe(getViewLifecycleOwner(), weather -> {
+            if (weather != null) {
+                lastUpdatedWeather.setText(weather.getLastUpdate());
+                currentTemperature.setText(weather.addUnitMeasure(weather.getCurrentTemperature()));
+                currentWeather.setText(weather.getCurrentWeather());
+                maxTemperature.setText(weather.addUnitMeasure(weather.getMaxTemperature()));
+                minTemperature.setText(weather.addUnitMeasure(weather.getMinTemperature()));
+            }
+        });
         return root;
     }
 

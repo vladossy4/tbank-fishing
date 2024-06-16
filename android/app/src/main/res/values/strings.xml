@@ -4,4 +4,8 @@
     <string name="title_wiki">Wiki</string>
     <string name="title_discussions">Обсуждения</string>
     <string name="title_profile">Профиль</string>
+    <string name="now">Сейчас</string>
+    <string name="max">Максимум</string>
+    <string name="min">Минимум</string>
+    <string name="wind">Ветер</string>
 </resources>

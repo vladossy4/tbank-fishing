@@ -4,25 +4,31 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.salfetka.fishing.models.Weather;
+
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Date;
+import java.util.Locale;
+
 public class WeatherViewModel extends ViewModel {
 
-    private final MutableLiveData<String> day = new MutableLiveData<>();
-    private final MutableLiveData<String> mainTemperature = new MutableLiveData<>();
-    private final MutableLiveData<String> mainWeather = new MutableLiveData<>();
+    private final MutableLiveData<Weather> weather;
 
     public WeatherViewModel() {
-        day.setValue("Сейчас");
-        mainTemperature.setValue("23°C");
-        mainWeather.setValue("Переменная\nоблачность");
+        weather = new MutableLiveData<>(new Weather(
+                "°C",
+                23,
+                "Переменная\nоблачность",
+                27,
+                15));
     }
 
-    public LiveData<String> getTextDay() {
-        return day;
+    public MutableLiveData<Weather> getWeather() {
+        return weather;
     }
-    public LiveData<String> getMainTemperature() {
-        return mainTemperature;
-    }
-    public LiveData<String> getMainWeather() {
-        return mainWeather;
+
+    public void setWeather(Weather newWeather) {
+        weather.setValue(newWeather);
     }
 }
