@@ -11,27 +11,31 @@ public class Weather {
     final String currentWeather;
     final int maxTemperature;
     final int minTemperature;
+    final int chanceOfPrecipitation;
+    final String windOrientation;
 
-    public Weather(String unitMeasure, int currentTemperature, String currentWeather, int maxTemperature, int minTemperature){
+    public Weather(String unitMeasure, int currentTemperature, String currentWeather, int maxTemperature, int minTemperature, int chanceOfPrecipitation, String windOrientation){
         this.unitMeasure = unitMeasure;
         this.currentTemperature = currentTemperature;
         this.currentWeather = currentWeather;
         this.maxTemperature = maxTemperature;
         this.minTemperature = minTemperature;
+        this.chanceOfPrecipitation = chanceOfPrecipitation;
+        this.windOrientation = windOrientation;
         lastUpdate = new Date();
     }
 
-    public String getLastUpdate() {
+    public Date getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public String getLastUpdateFormat() {
         SimpleDateFormat formatter = new SimpleDateFormat("d MMM k:mm", Locale.getDefault());
         return formatter.format(lastUpdate);
     }
 
     public String getUnitMeasure() {
         return unitMeasure;
-    }
-
-    public String addUnitMeasure(int value) {
-        return value + unitMeasure;
     }
 
     public int getCurrentTemperature() {
@@ -48,5 +52,13 @@ public class Weather {
 
     public int getMinTemperature() {
         return minTemperature;
+    }
+
+    public int getChanceOfPrecipitation() {
+        return chanceOfPrecipitation;
+    }
+
+    public String getWindOrientation() {
+        return windOrientation;
     }
 }

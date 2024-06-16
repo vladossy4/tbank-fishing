@@ -21,7 +21,9 @@ public class WeatherViewModel extends ViewModel {
                 23,
                 "Переменная\nоблачность",
                 27,
-                15));
+                15,
+                10,
+                "Северо-восточный"));
     }
 
     public MutableLiveData<Weather> getWeather() {

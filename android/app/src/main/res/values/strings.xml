@@ -1,11 +1,22 @@
 <resources>
     <string name="app_name">Fishing</string>
+
     <string name="title_weather">Погода</string>
     <string name="title_wiki">Wiki</string>
     <string name="title_discussions">Обсуждения</string>
     <string name="title_profile">Профиль</string>
+
     <string name="now">Сейчас</string>
     <string name="max">Максимум</string>
     <string name="min">Минимум</string>
+    <string name="chance">Вероятность осадков</string>
     <string name="wind">Ветер</string>
+    <string name="humidity">Влажность</string>
+    <string name="pressure">Давление</string>
+    <string name="dawn">Рассвет</string>
+    <string name="sunrise">Восход</string>
+    <string name="sunset">Закат</string>
+    <string name="twilight">Сумерки</string>
+    <string name="hourly_weather">Почасовой прогноз</string>
+    <string name="ten_day_weather">Прогноз погоды на 10 дней</string>
 </resources>
