@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/weather_item_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/weather_text_size_small"/>
+
+    <ImageView
+        android:id="@+id/item_current_weather"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:contentDescription="Направление ветра"
+        android:src="@drawable/ic_weather_cloudy_48dp"/>
+
+    <TextView
+        android:id="@+id/weather_item_max_temperature"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/weather_text_size_small"/>
+
+    <TextView
+        android:id="@+id/weather_item_min_temperature"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/weather_text_size_small"/>
+
+    <ImageView
+        android:id="@+id/item_current_wind"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="Направление ветра"
+        android:rotation="180"
+        android:src="@drawable/ic_weather_wind_arrow_down_32dp"/>
+</LinearLayout>

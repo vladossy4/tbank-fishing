@@ -16,4 +16,5 @@
     <color name="weather_sun">#FFDD00</color>
     <color name="weather_moon">#C6D6FF</color>
     <color name="weather_moon_line">#80A3FF</color>
+    <color name="weather_wind_arrow">#00E1FF</color>
 </resources>

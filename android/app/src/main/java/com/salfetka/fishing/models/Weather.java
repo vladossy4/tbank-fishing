@@ -5,52 +5,83 @@ import java.util.Date;
 import java.util.Locale;
 
 public class Weather {
-    final Date lastUpdate;
-    final String unitMeasure;
-    final int currentTemperature;
+    /** Время, на которое был выполнен прогноз погоды */
+    final Date weatherTime;
+    /** Единицы измерения температуры */
+    final String temperatureUnit;
+    /** Единицы измерения скорости */
+    final String speedUnit;
+    /** Единицы измерения давления */
+    final String pressureUnit;
+    /** Температура воздуха  */
+    final Integer temperature;
+    /** Состояние погоды */
     final String currentWeather;
-    final int maxTemperature;
-    final int minTemperature;
+    /** Максимальная температура */
+    final Integer maxTemperature;
+    /** Минимальная температура */
+    final Integer minTemperature;
+    /** Вероятность осадков */
     final int chanceOfPrecipitation;
-    final String windOrientation;
+    /** Направление ветра */
+    final Wind windOrientation;
+    /** Скорость ветра */
+    final int windSpeed;
+    /** Влажность воздуха */
+    final int humidity;
+    /** Атмосферное давление */
+    final int pressure;
 
-    public Weather(String unitMeasure, int currentTemperature, String currentWeather, int maxTemperature, int minTemperature, int chanceOfPrecipitation, String windOrientation){
-        this.unitMeasure = unitMeasure;
-        this.currentTemperature = currentTemperature;
+    public Weather(Date weatherTime, String temperatureUnit, String speedUnit, String pressureUnit, int temperature, String currentWeather, int maxTemperature, int minTemperature, int chanceOfPrecipitation, Wind windOrientation, int windSpeed, int humidity, int pressure){
+        this.weatherTime = weatherTime;
+        this.temperatureUnit = temperatureUnit;
+        this.speedUnit = speedUnit;
+        this.pressureUnit = pressureUnit;
+        this.temperature = temperature;
         this.currentWeather = currentWeather;
         this.maxTemperature = maxTemperature;
         this.minTemperature = minTemperature;
         this.chanceOfPrecipitation = chanceOfPrecipitation;
         this.windOrientation = windOrientation;
-        lastUpdate = new Date();
+        this.windSpeed = windSpeed;
+        this.humidity = humidity;
+        this.pressure = pressure;
     }
 
-    public Date getLastUpdate() {
-        return lastUpdate;
+    public Date getWeatherTime() {
+        return weatherTime;
     }
 
     public String getLastUpdateFormat() {
         SimpleDateFormat formatter = new SimpleDateFormat("d MMM k:mm", Locale.getDefault());
-        return formatter.format(lastUpdate);
+        return formatter.format(weatherTime);
     }
 
-    public String getUnitMeasure() {
-        return unitMeasure;
+    public String getTemperatureUnit() {
+        return temperatureUnit;
     }
 
-    public int getCurrentTemperature() {
-        return currentTemperature;
+    public String getSpeedUnit() {
+        return speedUnit;
+    }
+
+    public String getPressureUnit() {
+        return pressureUnit;
+    }
+
+    public Integer getTemperature() {
+        return temperature;
     }
 
     public String getCurrentWeather() {
         return currentWeather;
     }
 
-    public int getMaxTemperature() {
+    public Integer getMaxTemperature() {
         return maxTemperature;
     }
 
-    public int getMinTemperature() {
+    public Integer getMinTemperature() {
         return minTemperature;
     }
 
@@ -58,7 +89,19 @@ public class Weather {
         return chanceOfPrecipitation;
     }
 
-    public String getWindOrientation() {
+    public Wind getWindOrientation() {
         return windOrientation;
+    }
+
+    public int getWindSpeed() {
+        return windSpeed;
+    }
+
+    public int getHumidity() {
+        return humidity;
+    }
+
+    public int getPressure() {
+        return pressure;
     }
 }

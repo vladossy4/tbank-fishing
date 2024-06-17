@@ -28,12 +28,24 @@ public class WeatherFragment extends Fragment {
         weatherViewModel.getWeather().observe(getViewLifecycleOwner(), weather -> {
             if (weather != null) {
                 binding.lastUpdatedWeather.setText(weather.getLastUpdateFormat());
-                binding.currentTemperature.setText(weather.getCurrentTemperature()+weather.getUnitMeasure());
+                binding.currentTemperature.setText(weather.getTemperature()+weather.getTemperatureUnit());
                 binding.currentWeather.setText(weather.getCurrentWeather());
-                binding.maxTemperature.setText(weather.getMaxTemperature()+weather.getUnitMeasure());
-                binding.minTemperature.setText(weather.getMinTemperature()+weather.getUnitMeasure());
+                binding.maxTemperature.setText(weather.getMaxTemperature()+weather.getTemperatureUnit());
+                binding.minTemperature.setText(weather.getMinTemperature()+weather.getTemperatureUnit());
                 binding.chanceOfPrecipitation.setText(weather.getChanceOfPrecipitation()+"%");
-                binding.windOrientation.setText(weather.getWindOrientation());
+                binding.windOrientation.setText(weather.getWindOrientation().getFullName());
+                binding.imageCurrentWind.setRotation(weather.getWindOrientation().ordinal()*45);
+                binding.windPower.setText(weather.getWindSpeed()+weather.getSpeedUnit());
+                binding.humidity.setText(weather.getHumidity()+"%");
+                binding.pressure.setText(weather.getPressure()+weather.getPressureUnit());
+            }
+        });
+        weatherViewModel.getSunTimes().observe(getViewLifecycleOwner(), sunTimes -> {
+            if (sunTimes != null){
+                binding.dawn.setText(sunTimes.getDawn());
+                binding.sunrise.setText(sunTimes.getSunrise());
+                binding.sunset.setText(sunTimes.getSunset());
+                binding.twilight.setText(sunTimes.getTwilight());
             }
         });
         return root;
