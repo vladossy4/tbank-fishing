@@ -11,6 +11,9 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.salfetka.fishing.databinding.FragmentWeatherBinding;
+import com.salfetka.fishing.models.Weather;
+
+import java.util.ArrayList;
 
 public class WeatherFragment extends Fragment {
 
@@ -27,14 +30,14 @@ public class WeatherFragment extends Fragment {
 
         weatherViewModel.getWeather().observe(getViewLifecycleOwner(), weather -> {
             if (weather != null) {
-                binding.lastUpdatedWeather.setText(weather.getLastUpdateFormat());
+                binding.lastUpdatedWeather.setText(weather.getWeatherDateTimeFormat());
                 binding.currentTemperature.setText(weather.getTemperature()+weather.getTemperatureUnit());
                 binding.currentWeather.setText(weather.getCurrentWeather());
                 binding.maxTemperature.setText(weather.getMaxTemperature()+weather.getTemperatureUnit());
                 binding.minTemperature.setText(weather.getMinTemperature()+weather.getTemperatureUnit());
                 binding.chanceOfPrecipitation.setText(weather.getChanceOfPrecipitation()+"%");
                 binding.windOrientation.setText(weather.getWindOrientation().getFullName());
-                binding.imageCurrentWind.setRotation(weather.getWindOrientation().ordinal()*45);
+                binding.imageCurrentWind.setRotation(weather.getWindOrientation().getAngle());
                 binding.windPower.setText(weather.getWindSpeed()+weather.getSpeedUnit());
                 binding.humidity.setText(weather.getHumidity()+"%");
                 binding.pressure.setText(weather.getPressure()+weather.getPressureUnit());
@@ -48,6 +51,10 @@ public class WeatherFragment extends Fragment {
                 binding.twilight.setText(sunTimes.getTwilight());
             }
         });
+        WeatherAdapter hourAdapter = new WeatherAdapter(getContext(), weatherViewModel.getHoursWeatherList().getValue(), false);
+        WeatherAdapter daysAdapter = new WeatherAdapter(getContext(), weatherViewModel.getDaysWeatherList().getValue(), true);
+        binding.hoursWeather.setAdapter(hourAdapter);
+        binding.daysWeather.setAdapter(daysAdapter);
         return root;
     }
 

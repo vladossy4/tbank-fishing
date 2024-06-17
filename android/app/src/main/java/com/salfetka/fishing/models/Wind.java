@@ -25,4 +25,7 @@ public enum Wind {
     public String getShortName() {
         return shortName;
     }
+    public int getAngle() {
+        return this.ordinal() * 45;
+    }
 }

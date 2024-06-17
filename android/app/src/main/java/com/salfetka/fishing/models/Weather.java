@@ -14,13 +14,13 @@ public class Weather {
     /** Единицы измерения давления */
     final String pressureUnit;
     /** Температура воздуха  */
-    final Integer temperature;
+    final int temperature;
     /** Состояние погоды */
     final String currentWeather;
     /** Максимальная температура */
-    final Integer maxTemperature;
+    final int maxTemperature;
     /** Минимальная температура */
-    final Integer minTemperature;
+    final int minTemperature;
     /** Вероятность осадков */
     final int chanceOfPrecipitation;
     /** Направление ветра */
@@ -52,8 +52,18 @@ public class Weather {
         return weatherTime;
     }
 
-    public String getLastUpdateFormat() {
+    public String getWeatherDateTimeFormat() {
         SimpleDateFormat formatter = new SimpleDateFormat("d MMM k:mm", Locale.getDefault());
+        return formatter.format(weatherTime);
+    }
+
+    public String getWeatherHourFormat() {
+        SimpleDateFormat formatter = new SimpleDateFormat("k:00", Locale.getDefault());
+        return formatter.format(weatherTime);
+    }
+
+    public String getWeatherDayFormat() {
+        SimpleDateFormat formatter = new SimpleDateFormat("E\nd", Locale.getDefault());
         return formatter.format(weatherTime);
     }
 
@@ -69,7 +79,7 @@ public class Weather {
         return pressureUnit;
     }
 
-    public Integer getTemperature() {
+    public int getTemperature() {
         return temperature;
     }
 
@@ -77,11 +87,11 @@ public class Weather {
         return currentWeather;
     }
 
-    public Integer getMaxTemperature() {
+    public int getMaxTemperature() {
         return maxTemperature;
     }
 
-    public Integer getMinTemperature() {
+    public int getMinTemperature() {
         return minTemperature;
     }
 

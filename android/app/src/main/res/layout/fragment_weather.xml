@@ -78,7 +78,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="8dp"
-                        android:contentDescription="Значок погоды"
+                        android:contentDescription="@string/weather_icon_description"
                         android:src="@drawable/ic_weather_partly_cloudy_48dp"
                         app:layout_constraintLeft_toRightOf="@id/current_temperature"
                         app:layout_constraintTop_toBottomOf="@id/text_now" />
@@ -192,8 +192,7 @@
                         android:id="@+id/image_current_wind"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:contentDescription="Направление ветра"
-                        android:rotation="45"
+                        android:contentDescription="@string/wind_icon_description"
                         android:src="@drawable/ic_weather_wind_arrow_down_32dp"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -258,8 +257,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 app:cardElevation="8dp"
-                app:layout_flexGrow="1"
-                app:layout_minWidth="150dp">
+                app:layout_flexGrow="0.65"
+                app:layout_minWidth="140dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -352,6 +351,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/hourly_weather"
+            android:layout_marginStart="8dp"
             android:textSize="@dimen/weather_text_size_title" />
 
         <com.google.android.material.card.MaterialCardView
@@ -360,22 +360,49 @@
             android:layout_margin="8dp"
             app:cardElevation="8dp">
 
-            <HorizontalScrollView
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp">
-                <androidx.recyclerview.widget.RecyclerView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                android:layout_height="match_parent">
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp">
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/hours_weather"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
+                    </androidx.recyclerview.widget.RecyclerView>
+                </HorizontalScrollView>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="8dp"
+                    android:orientation="vertical">
 
-                </androidx.recyclerview.widget.RecyclerView>
-            </HorizontalScrollView>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/weather_hint_temperature_hour"
+                        android:text="@string/weather_temperature_hint"
+                        android:textSize="@dimen/weather_text_size_hint"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/weather_hint_wind"
+                        android:text="@string/wind"
+                        android:textSize="@dimen/weather_text_size_hint"/>
+                </LinearLayout>
+            </FrameLayout>
+
         </com.google.android.material.card.MaterialCardView>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/ten_day_weather"
+            android:layout_marginStart="8dp"
             android:textSize="@dimen/weather_text_size_title" />
 
         <com.google.android.material.card.MaterialCardView
@@ -384,16 +411,41 @@
             android:layout_margin="8dp"
             app:cardElevation="8dp">
 
-            <HorizontalScrollView
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp">
-                <androidx.recyclerview.widget.RecyclerView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                android:layout_height="match_parent">
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp">
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/days_weather"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
+                    </androidx.recyclerview.widget.RecyclerView>
+                </HorizontalScrollView>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="8dp"
+                    android:orientation="vertical">
 
-                </androidx.recyclerview.widget.RecyclerView>
-            </HorizontalScrollView>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/weather_hint_temperature_day"
+                        android:text="@string/weather_temperature_hint"
+                        android:textSize="@dimen/weather_text_size_hint"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/weather_hint_wind"
+                        android:text="@string/wind"
+                        android:textSize="@dimen/weather_text_size_hint"/>
+                </LinearLayout>
+            </FrameLayout>
         </com.google.android.material.card.MaterialCardView>
 
         <TextView
