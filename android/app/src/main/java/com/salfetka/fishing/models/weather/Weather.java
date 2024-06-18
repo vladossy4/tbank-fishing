@@ -1,28 +1,24 @@
-package com.salfetka.fishing.models;
+package com.salfetka.fishing.models.weather;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
 public class Weather {
     /** Время, на которое был выполнен прогноз погоды */
-    final Date weatherTime;
-    /** Единицы измерения температуры */
-    final String temperatureUnit;
-    /** Единицы измерения скорости */
-    final String speedUnit;
-    /** Единицы измерения давления */
-    final String pressureUnit;
+    final Calendar weatherTime;
     /** Температура воздуха  */
     final int temperature;
     /** Состояние погоды */
-    final String currentWeather;
+    final WeatherState currentWeather;
     /** Максимальная температура */
     final int maxTemperature;
     /** Минимальная температура */
     final int minTemperature;
     /** Вероятность осадков */
     final int chanceOfPrecipitation;
+    final int amountOfPrecipitation;
     /** Направление ветра */
     final Wind windOrientation;
     /** Скорость ветра */
@@ -32,58 +28,44 @@ public class Weather {
     /** Атмосферное давление */
     final int pressure;
 
-    public Weather(Date weatherTime, String temperatureUnit, String speedUnit, String pressureUnit, int temperature, String currentWeather, int maxTemperature, int minTemperature, int chanceOfPrecipitation, Wind windOrientation, int windSpeed, int humidity, int pressure){
+    public Weather(Calendar weatherTime, int temperature, WeatherState currentWeather, int maxTemperature, int minTemperature, int chanceOfPrecipitation, int amountOfPrecipitation, Wind windOrientation, int windSpeed, int humidity, int pressure){
         this.weatherTime = weatherTime;
-        this.temperatureUnit = temperatureUnit;
-        this.speedUnit = speedUnit;
-        this.pressureUnit = pressureUnit;
         this.temperature = temperature;
         this.currentWeather = currentWeather;
         this.maxTemperature = maxTemperature;
         this.minTemperature = minTemperature;
         this.chanceOfPrecipitation = chanceOfPrecipitation;
+        this.amountOfPrecipitation = amountOfPrecipitation;
         this.windOrientation = windOrientation;
         this.windSpeed = windSpeed;
         this.humidity = humidity;
         this.pressure = pressure;
     }
 
-    public Date getWeatherTime() {
+    public Calendar getWeatherTime() {
         return weatherTime;
     }
 
     public String getWeatherDateTimeFormat() {
         SimpleDateFormat formatter = new SimpleDateFormat("d MMM k:mm", Locale.getDefault());
-        return formatter.format(weatherTime);
+        return formatter.format(weatherTime.getTime());
     }
 
     public String getWeatherHourFormat() {
         SimpleDateFormat formatter = new SimpleDateFormat("k:00", Locale.getDefault());
-        return formatter.format(weatherTime);
+        return formatter.format(weatherTime.getTime());
     }
 
     public String getWeatherDayFormat() {
         SimpleDateFormat formatter = new SimpleDateFormat("E\nd", Locale.getDefault());
-        return formatter.format(weatherTime);
-    }
-
-    public String getTemperatureUnit() {
-        return temperatureUnit;
-    }
-
-    public String getSpeedUnit() {
-        return speedUnit;
-    }
-
-    public String getPressureUnit() {
-        return pressureUnit;
+        return formatter.format(weatherTime.getTime());
     }
 
     public int getTemperature() {
         return temperature;
     }
 
-    public String getCurrentWeather() {
+    public WeatherState getCurrentWeather() {
         return currentWeather;
     }
 
@@ -97,6 +79,10 @@ public class Weather {
 
     public int getChanceOfPrecipitation() {
         return chanceOfPrecipitation;
+    }
+
+    public int getAmountOfPrecipitation() {
+        return amountOfPrecipitation;
     }
 
     public Wind getWindOrientation() {

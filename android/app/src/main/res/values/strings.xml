@@ -22,4 +22,6 @@
     <string name="wind_icon_description">Направление ветра</string>
     <string name="weather_icon_description">Значок погоды</string>
     <string name="weather_temperature_hint">Температура воздуха</string>
+    <string name="amount_of_precipitation">Количество осадков, мм</string>
+    <string name="wind_speed">Скорость ветра</string>
 </resources>

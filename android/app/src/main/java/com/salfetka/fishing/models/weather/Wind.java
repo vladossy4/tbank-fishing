@@ -1,4 +1,4 @@
-package com.salfetka.fishing.models;
+package com.salfetka.fishing.models.weather;
 
 public enum Wind {
     North("Северный", "С"),

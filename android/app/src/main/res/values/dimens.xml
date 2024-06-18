@@ -14,5 +14,7 @@
 
     <dimen name="weather_hint_temperature_hour">56dp</dimen>
     <dimen name="weather_hint_temperature_day">70dp</dimen>
-    <dimen name="weather_hint_wind">25dp</dimen>
+    <dimen name="weather_hint_amount_of_precipitation">25dp</dimen>
+    <dimen name="weather_hint_wind">20dp</dimen>
+    <dimen name="weather_hint_wind_speed">52dp</dimen>
 </resources>

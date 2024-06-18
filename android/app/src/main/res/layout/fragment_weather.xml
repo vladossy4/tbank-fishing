@@ -390,8 +390,20 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/weather_hint_amount_of_precipitation"
+                        android:text="@string/amount_of_precipitation"
+                        android:textSize="@dimen/weather_text_size_hint"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/weather_hint_wind"
                         android:text="@string/wind"
+                        android:textSize="@dimen/weather_text_size_hint"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/weather_hint_wind_speed"
+                        android:text="@string/wind_speed"
                         android:textSize="@dimen/weather_text_size_hint"/>
                 </LinearLayout>
             </FrameLayout>
@@ -441,8 +453,20 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/weather_hint_amount_of_precipitation"
+                        android:text="@string/amount_of_precipitation"
+                        android:textSize="@dimen/weather_text_size_hint"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/weather_hint_wind"
                         android:text="@string/wind"
+                        android:textSize="@dimen/weather_text_size_hint"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/weather_hint_wind_speed"
+                        android:text="@string/wind_speed"
                         android:textSize="@dimen/weather_text_size_hint"/>
                 </LinearLayout>
             </FrameLayout>

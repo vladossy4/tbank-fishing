@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -12,23 +11,27 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.salfetka.fishing.R;
-import com.salfetka.fishing.models.Weather;
+import com.salfetka.fishing.models.weather.Weather;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHolder> {
 
     private final LayoutInflater inflater;
-    private final List<Weather> weatherList;
-    private boolean forDay;
+    private List<Weather> weatherList;
+    private final boolean forDay;
 
     WeatherAdapter(Context context, List<Weather> weatherList, boolean forDay) {
         this.weatherList = weatherList;
         this.inflater = LayoutInflater.from(context);
         this.forDay = forDay;
     }
+
+    public void updateData(List<Weather> weatherList) {
+        this.weatherList = weatherList;
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public WeatherAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -47,8 +50,11 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHold
             holder.title.setText(weather.getWeatherHourFormat());
             holder.temperature.setText(String.valueOf(weather.getTemperature()));
         }
-        holder.weatherIcon.setImageResource(R.drawable.ic_weather_sunny_48dp);
+        holder.weatherIcon.setImageResource(weather.getCurrentWeather().getIcon());
         holder.windIcon.setRotation(weather.getWindOrientation().getAngle());
+        holder.windOrientation.setText(weather.getWindOrientation().getShortName());
+        holder.amountOfPrecipitation.setText(String.valueOf(weather.getAmountOfPrecipitation()));
+        holder.windSpeed.setText(String.valueOf(weather.getWindSpeed()));
     }
 
     @Override
@@ -58,7 +64,7 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHold
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         final ImageView weatherIcon, windIcon;
-        final TextView title, temperature;
+        final TextView title, temperature, windOrientation, amountOfPrecipitation, windSpeed;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -66,6 +72,9 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHold
             temperature = itemView.findViewById(R.id.weather_item_temperature);
             weatherIcon = itemView.findViewById(R.id.item_current_weather);
             windIcon = itemView.findViewById(R.id.item_current_wind);
+            windOrientation = itemView.findViewById(R.id.weather_item_wind_orientation);
+            amountOfPrecipitation = itemView.findViewById(R.id.weather_item_amount_of_precipitation);
+            windSpeed = itemView.findViewById(R.id.weather_item_wind_speed);
         }
     }
 }
