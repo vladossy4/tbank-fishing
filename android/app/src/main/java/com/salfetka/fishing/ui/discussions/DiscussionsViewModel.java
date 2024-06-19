@@ -1,19 +1,27 @@
 package com.salfetka.fishing.ui.discussions;
 
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class DiscussionsViewModel extends ViewModel {
+import com.salfetka.fishing.models.discussions.Message;
 
-    private final MutableLiveData<String> mText;
+import java.util.ArrayList;
+import java.util.List;
+
+public class DiscussionsViewModel extends ViewModel {
+    final MutableLiveData<List<Message>> messages;
 
     public DiscussionsViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is discussions fragment");
+        ArrayList<Message> exampleMessages = new ArrayList<>();
+        exampleMessages.add(new Message(0, "User1", "Первое сообщение в чате"));
+        exampleMessages.add(new Message(1, "User1", "Второе сообщение в чате"));
+        exampleMessages.add(new Message(2, "User2", "Простое случайное очень длинное сообщение от другого пользователя :) :) :)"));
+        exampleMessages.add(new Message(3, "User3", "😊😊😊👌😎"));
+        exampleMessages.add(new Message(3, "User1", "😊😊😊👌😎"));
+        messages = new MutableLiveData<>(exampleMessages);
     }
 
-    public LiveData<String> getText() {
-        return mText;
+    public MutableLiveData<List<Message>> getMessages() {
+        return messages;
     }
 }

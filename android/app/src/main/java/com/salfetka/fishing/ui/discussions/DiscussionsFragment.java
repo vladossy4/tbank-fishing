@@ -24,8 +24,10 @@ public class DiscussionsFragment extends Fragment {
         binding = FragmentDiscussionsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textDiscussTmp;
-        discussionsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        binding.chatView.setAdapter(new ChatAdapter(getContext(), discussionsViewModel.getMessages().getValue()));
+        discussionsViewModel.getMessages().observe(getViewLifecycleOwner(), messages -> {
+
+        });
         return root;
     }
 

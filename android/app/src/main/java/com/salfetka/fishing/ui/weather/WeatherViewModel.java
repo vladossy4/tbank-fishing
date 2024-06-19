@@ -10,8 +10,6 @@ import com.salfetka.fishing.models.weather.WeatherState;
 import com.salfetka.fishing.models.weather.Wind;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -23,6 +21,7 @@ public class WeatherViewModel extends ViewModel {
     private final MutableLiveData<List<Weather>> daysWeatherList;
     public WeatherViewModel() {
         unitMeasure = new MutableLiveData<>(new UnitMeasure("°C", "м/с", "мбар"));
+
         weather = new MutableLiveData<>(new Weather(
                 new GregorianCalendar(),
                 23,
