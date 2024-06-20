@@ -19,9 +19,11 @@
     <string name="twilight">Сумерки</string>
     <string name="hourly_weather">Почасовой прогноз</string>
     <string name="ten_day_weather">Прогноз погоды на 10 дней</string>
-    <string name="wind_icon_description">Направление ветра</string>
-    <string name="weather_icon_description">Значок погоды</string>
     <string name="weather_temperature_hint">Температура воздуха</string>
     <string name="amount_of_precipitation">Количество осадков, мм</string>
     <string name="wind_speed">Скорость ветра</string>
+
+    <string name="wind_icon_description">Направление ветра</string>
+    <string name="weather_icon_description">Значок погоды</string>
+    <string name="chat_send_icon_description">Значок отправки сообщения</string>
 </resources>

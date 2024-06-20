@@ -26,6 +26,10 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
         this.messages = messages;
     }
 
+    public Message getItem(int index) {
+        return messages.get(index);
+    }
+
     public void updateAll(List<Message> messages) {
         this.messages = messages;
         notifyDataSetChanged();

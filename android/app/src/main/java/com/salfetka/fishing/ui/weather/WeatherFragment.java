@@ -55,16 +55,8 @@ public class WeatherFragment extends Fragment {
         final WeatherAdapter daysAdapter = new WeatherAdapter(getContext(), weatherViewModel.getDaysWeatherList().getValue(), true);
         binding.hoursWeather.setAdapter(hoursAdapter);
         binding.daysWeather.setAdapter(daysAdapter);
-        weatherViewModel.getHoursWeatherList().observe(getViewLifecycleOwner(), hoursWeatherList -> {
-            if (hoursWeatherList != null) {
-                hoursAdapter.updateData(hoursWeatherList);
-            }
-        });
-        weatherViewModel.getDaysWeatherList().observe(getViewLifecycleOwner(), daysWeatherList -> {
-            if (daysWeatherList != null) {
-                daysAdapter.updateData(daysWeatherList);
-            }
-        });
+        weatherViewModel.getHoursWeatherList().observe(getViewLifecycleOwner(), hoursAdapter::updateData);
+        weatherViewModel.getDaysWeatherList().observe(getViewLifecycleOwner(), daysAdapter::updateData);
         return root;
     }
 
