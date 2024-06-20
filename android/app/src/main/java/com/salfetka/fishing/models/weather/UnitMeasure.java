@@ -1,5 +1,6 @@
 package com.salfetka.fishing.models.weather;
 
+/** Хранит настройки единиц измерений */
 public class UnitMeasure {
     /** Единицы измерения температуры */
     final String temperatureUnit;
@@ -13,15 +14,15 @@ public class UnitMeasure {
         this.speedUnit = speedUnit;
         this.pressureUnit = pressureUnit;
     }
-
+    /** Получение единицы измерения температуры */
     public String getTemperatureUnit() {
         return temperatureUnit;
     }
-
+    /** Получение единицы измерения скорости */
     public String getSpeedUnit() {
         return speedUnit;
     }
-
+    /** Получение единицы измерения давления */
     public String getPressureUnit() {
         return pressureUnit;
     }

@@ -1,5 +1,6 @@
 package com.salfetka.fishing.models.weather;
 
+/** Описывает направление ветра */
 public enum Wind {
     North("Северный", "С"),
     NorthEast("Северо-восточный", "СВ"),
@@ -18,13 +19,15 @@ public enum Wind {
         this.shortName = shortName;
     }
 
+    /** Полное название направления ветра */
     public String getFullName() {
         return fullName;
     }
-
+    /** Сокращенное название направления ветра */
     public String getShortName() {
         return shortName;
     }
+    /** Направление ветра в градусах для поворота значка указателя */
     public int getAngle() {
         return this.ordinal() * 45;
     }

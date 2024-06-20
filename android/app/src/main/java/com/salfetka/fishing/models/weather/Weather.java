@@ -1,10 +1,10 @@
 package com.salfetka.fishing.models.weather;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
+import com.salfetka.fishing.models.DateFormatter;
 
+import java.util.Calendar;
+
+/** Хранит данные о погоде */
 public class Weather {
     /** Время, на которое был выполнен прогноз погоды */
     final Calendar weatherTime;
@@ -47,18 +47,15 @@ public class Weather {
     }
 
     public String getWeatherDateTimeFormat() {
-        SimpleDateFormat formatter = new SimpleDateFormat("d MMM k:mm", Locale.getDefault());
-        return formatter.format(weatherTime.getTime());
+        return DateFormatter.format(weatherTime, "d MMM k:mm");
     }
 
     public String getWeatherHourFormat() {
-        SimpleDateFormat formatter = new SimpleDateFormat("k:00", Locale.getDefault());
-        return formatter.format(weatherTime.getTime());
+        return DateFormatter.format(weatherTime, "k:00");
     }
 
     public String getWeatherDayFormat() {
-        SimpleDateFormat formatter = new SimpleDateFormat("E\nd", Locale.getDefault());
-        return formatter.format(weatherTime.getTime());
+        return DateFormatter.format(weatherTime, "E\nd");
     }
 
     public int getTemperature() {

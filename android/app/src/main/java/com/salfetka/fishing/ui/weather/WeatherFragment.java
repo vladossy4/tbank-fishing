@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.salfetka.fishing.databinding.FragmentWeatherBinding;
 import com.salfetka.fishing.models.weather.UnitMeasure;
 
+/** Подложка интерфейса: отображение данных о погоде и обработка событий */
 public class WeatherFragment extends Fragment {
 
     private FragmentWeatherBinding binding;

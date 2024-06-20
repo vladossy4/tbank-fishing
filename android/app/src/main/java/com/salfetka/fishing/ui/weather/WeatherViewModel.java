@@ -13,11 +13,17 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+/** Управление данными о погоде */
 public class WeatherViewModel extends ViewModel {
+    /** Поле, хранящее единицы измерения */
     private final MutableLiveData<UnitMeasure> unitMeasure;
+    /** Поле, хранящее текущую погоду */
     private final MutableLiveData<Weather> weather;
+    /** Поле, хранящее сведения о восходе и заходе солнца */
     private final MutableLiveData<SunTimes> sunTimes;
+    /** Поле, хранящее погоду по часам */
     private final MutableLiveData<List<Weather>> hoursWeatherList;
+    /** Поле, хранящее погоду по дням */
     private final MutableLiveData<List<Weather>> daysWeatherList;
     public WeatherViewModel() {
         unitMeasure = new MutableLiveData<>(new UnitMeasure("°C", "м/с", "мбар"));

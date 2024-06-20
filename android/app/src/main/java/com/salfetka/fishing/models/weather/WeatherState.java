@@ -2,6 +2,7 @@ package com.salfetka.fishing.models.weather;
 
 import com.salfetka.fishing.R;
 
+/** Связывает название погодных условий с отображаемыми значками */
 public enum WeatherState {
     Sunny("Ясно", R.drawable.ic_weather_sunny_48dp),
     ClearNight("Ясно", R.drawable.ic_weather_clear_night_48dp),

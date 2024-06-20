@@ -15,6 +15,7 @@ import com.salfetka.fishing.models.weather.Weather;
 
 import java.util.List;
 
+/** Связывает состояния погоды в списке с их представлением */
 public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHolder> {
 
     private final LayoutInflater inflater;

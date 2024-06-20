@@ -1,5 +1,6 @@
 package com.salfetka.fishing.models.weather;
 
+/** Хранит данные о восходе и заходе солнца */
 public class SunTimes {
     final String dawn;
     final String sunrise;
@@ -13,18 +14,19 @@ public class SunTimes {
         this.twilight = twilight;
     }
 
+    /** Получение времени рассвета (становится светло, но солнце ещё не взошло) */
     public String getDawn() {
         return dawn;
     }
-
+    /** Получение времени восхода солнца */
     public String getSunrise() {
         return sunrise;
     }
-
+    /** Получение времени захода солнца */
     public String getSunset() {
         return sunset;
     }
-
+    /** Получение времени сумерек (ещё не стемнело, но солнце уже зашло) */
     public String getTwilight() {
         return twilight;
     }

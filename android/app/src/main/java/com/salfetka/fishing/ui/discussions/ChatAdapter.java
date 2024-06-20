@@ -10,12 +10,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.salfetka.fishing.R;
+import com.salfetka.fishing.models.DateFormatter;
 import com.salfetka.fishing.models.discussions.Message;
 
-import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 
+/** Связывает сообщения в чате с их представлением */
 public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
 
     private final LayoutInflater inflater;
@@ -24,6 +25,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
     public ChatAdapter(Context context, List<Message> messages) {
         this.inflater = LayoutInflater.from(context);
         this.messages = messages;
+        setHasStableIds(true);
     }
 
     public Message getItem(int index) {
@@ -33,6 +35,11 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
     public void updateAll(List<Message> messages) {
         this.messages = messages;
         notifyDataSetChanged();
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return messages.get(position).getId();
     }
 
     @NonNull
@@ -47,8 +54,21 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ViewHolder> {
         Message message = messages.get(position);
         holder.userName.setText(message.getUserName());
         holder.message.setText(message.getMessage());
-        SimpleDateFormat formatter = new SimpleDateFormat("k:mm", Locale.getDefault());
-        holder.sendTime.setText(formatter.format(message.getDate().getTime()));
+        Calendar messageDate = message.getDate();
+        String pattern = "k:mm";
+        if (position > 0 ) {
+            Calendar lastMessageDate = messages.get(position-1).getDate();
+            if (messageDate.get(Calendar.YEAR) != lastMessageDate.get(Calendar.YEAR)) {
+                pattern = "d MMMM y, k:mm";
+            } else if (messageDate.get(Calendar.MONTH) != lastMessageDate.get(Calendar.MONTH) ||
+                       messageDate.get(Calendar.DAY_OF_MONTH) != lastMessageDate.get(Calendar.DAY_OF_MONTH)){
+                pattern = "d MMMM, k:mm";
+            }
+        }
+        else {
+            pattern = "d MMMM y, k:mm";
+        }
+        holder.sendTime.setText(DateFormatter.format(messageDate, pattern));
     }
 
     @Override
