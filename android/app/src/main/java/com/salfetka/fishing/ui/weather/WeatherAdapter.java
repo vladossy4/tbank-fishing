@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.salfetka.fishing.R;
 import com.salfetka.fishing.models.weather.Weather;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /** Связывает состояния погоды в списке с их представлением */
@@ -23,7 +24,10 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHold
     private final boolean forDay;
 
     WeatherAdapter(Context context, List<Weather> weatherList, boolean forDay) {
-        this.weatherList = weatherList;
+        if (weatherList != null) {
+            this.weatherList = weatherList;
+        }
+        else this.weatherList = new ArrayList<>();
         this.inflater = LayoutInflater.from(context);
         this.forDay = forDay;
     }

@@ -18,6 +18,7 @@ public class Weather {
     final int minTemperature;
     /** Вероятность осадков */
     final int chanceOfPrecipitation;
+    /** Количество осадков */
     final int amountOfPrecipitation;
     /** Направление ветра */
     final Wind windOrientation;

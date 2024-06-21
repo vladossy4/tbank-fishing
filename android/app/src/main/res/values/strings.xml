@@ -26,4 +26,7 @@
     <string name="wind_icon_description">Направление ветра</string>
     <string name="weather_icon_description">Значок погоды</string>
     <string name="chat_send_icon_description">Значок отправки сообщения</string>
+
+    <string name="chat_menu_copy">Копировать текст</string>
+    <string name="chat_menu_deselect">Снять выделение</string>
 </resources>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/chat_menu_copy"
+        android:icon="@drawable/ic_chat_menu_copy_24dp"
+        android:title="@string/chat_menu_copy"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/chat_menu_deselect"
+        android:icon="@drawable/ic_chat_menu_deselect_24dp"
+        android:title="@string/chat_menu_deselect"
+        app:showAsAction="ifRoom"/>
+</menu>

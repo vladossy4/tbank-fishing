@@ -6,6 +6,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
+import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
@@ -32,6 +33,17 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
+
+        binding.navView.setOnItemSelectedListener( item -> {
+            NavOptions navOptions = new NavOptions.Builder()
+                    .setEnterAnim(R.anim.nav_default_enter_anim)
+                    .setExitAnim(R.anim.nav_default_exit_anim)
+                    .setPopEnterAnim(R.anim.nav_default_pop_enter_anim)
+                    .setPopExitAnim(R.anim.nav_default_pop_exit_anim)
+                    .build();
+            navController.navigate(item.getItemId(), null, navOptions);
+            return true;
+        });
     }
 
 }

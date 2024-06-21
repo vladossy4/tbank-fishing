@@ -1,5 +1,9 @@
 package com.salfetka.fishing.ui.discussions;
 
+
+import android.content.ClipData;
+import android.content.ClipboardManager;
+
 import androidx.databinding.ObservableArrayList;
 import androidx.databinding.ObservableList;
 import androidx.lifecycle.MutableLiveData;
@@ -8,6 +12,7 @@ import androidx.lifecycle.ViewModel;
 import com.salfetka.fishing.models.discussions.Message;
 
 import java.util.GregorianCalendar;
+import java.util.HashSet;
 
 /** Управление данными о переписках */
 public class DiscussionsViewModel extends ViewModel {
@@ -35,5 +40,14 @@ public class DiscussionsViewModel extends ViewModel {
         if (messages.getValue() != null) {
             messages.getValue().add(new Message(new GregorianCalendar(), "Slava", message));
         }
+    }
+
+    public void copyMessages(HashSet<Integer> selectedMessages, ClipboardManager clipboardManager){
+        StringBuilder allSelected = new StringBuilder();
+        selectedMessages.forEach( i -> {
+            allSelected.append(messages.getValue().get(i).getMessage()).append("\n");
+        });
+        ClipData clip = ClipData.newPlainText("", allSelected);
+        clipboardManager.setPrimaryClip(clip);
     }
 }
