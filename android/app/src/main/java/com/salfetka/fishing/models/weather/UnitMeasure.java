@@ -9,6 +9,10 @@ public class UnitMeasure {
     /** Единицы измерения давления */
     final String pressureUnit;
 
+    /** Создание указания единиц измерения
+     * @param temperatureUnit Единицы измерения температуры
+     * @param speedUnit Единицы измерения скорости
+     * @param pressureUnit Единицы измерения давления */
     public UnitMeasure(String temperatureUnit, String speedUnit, String pressureUnit) {
         this.temperatureUnit = temperatureUnit;
         this.speedUnit = speedUnit;

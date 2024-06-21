@@ -29,6 +29,18 @@ public class Weather {
     /** Атмосферное давление */
     final int pressure;
 
+    /** Создание данных о состоянии погоды
+     * @param weatherTime Время, на которое был выполнен прогноз погоды
+     * @param temperature Температура воздуха
+     * @param currentWeather Состояние погоды
+     * @param maxTemperature Максимальная температура
+     * @param minTemperature Минимальная температура
+     * @param chanceOfPrecipitation Вероятность осадков
+     * @param amountOfPrecipitation Количество осадков
+     * @param windOrientation Направление ветра
+     * @param windSpeed Скорость ветра
+     * @param humidity Влажность воздуха
+     * @param pressure Атмосферное давление */
     public Weather(Calendar weatherTime, int temperature, WeatherState currentWeather, int maxTemperature, int minTemperature, int chanceOfPrecipitation, int amountOfPrecipitation, Wind windOrientation, int windSpeed, int humidity, int pressure){
         this.weatherTime = weatherTime;
         this.temperature = temperature;

@@ -7,6 +7,11 @@ public class SunTimes {
     final String sunset;
     final String twilight;
 
+    /** Создание данных о восходе и заходе солнца
+     * @param dawn время рассвета (становится светло, но солнце ещё не взошло)
+     * @param sunrise время восхода солнца
+     * @param sunset время захода солнца
+     * @param twilight время сумерек (ещё не стемнело, но солнце уже зашло) */
     public SunTimes(String dawn, String sunrise, String sunset, String twilight) {
         this.dawn = dawn;
         this.sunrise = sunrise;
