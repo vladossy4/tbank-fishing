@@ -4,12 +4,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.salfetka.fishing.R;
 import com.salfetka.fishing.databinding.FragmentProfileBinding;
 
 public class ProfileFragment extends Fragment {
@@ -24,8 +24,15 @@ public class ProfileFragment extends Fragment {
         binding = FragmentProfileBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textNotifications;
-        profileViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        binding.profileUsername.setText(R.string.profile_login_guest);
+        binding.loginBtn.setOnClickListener( view -> {
+            LoginDialogFragment loginDialog = new LoginDialogFragment();
+            loginDialog.show(requireActivity().getSupportFragmentManager(), "loginDialog");
+        });
+        binding.registerBtn.setOnClickListener( view -> {
+            RegistrationDialogFragment registrationDialog = new RegistrationDialogFragment();
+            registrationDialog.show(requireActivity().getSupportFragmentManager(), "registrationDialog");
+        });
         return root;
     }
 

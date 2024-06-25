@@ -11,6 +11,7 @@ lifecycleLivedataKtx = "2.8.1"
 lifecycleViewmodelKtx = "2.8.1"
 navigationFragment = "2.7.7"
 navigationUi = "2.7.7"
+swiperefreshlayout = "1.1.0"
 
 [libraries]
 flexbox = { module = "com.google.android.flexbox:flexbox", version.ref = "flexbox" }
@@ -24,6 +25,7 @@ lifecycle-livedata-ktx = { group = "androidx.lifecycle", name = "lifecycle-lived
 lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version.ref = "lifecycleViewmodelKtx" }
 navigation-fragment = { group = "androidx.navigation", name = "navigation-fragment", version.ref = "navigationFragment" }
 navigation-ui = { group = "androidx.navigation", name = "navigation-ui", version.ref = "navigationUi" }
+swiperefreshlayout = { group = "androidx.swiperefreshlayout", name = "swiperefreshlayout", version.ref = "swiperefreshlayout" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

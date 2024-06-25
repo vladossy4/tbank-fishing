@@ -58,6 +58,10 @@ public class WeatherFragment extends Fragment {
         binding.daysWeather.setAdapter(daysAdapter);
         weatherViewModel.getHoursWeatherList().observe(getViewLifecycleOwner(), hoursAdapter::updateData);
         weatherViewModel.getDaysWeatherList().observe(getViewLifecycleOwner(), daysAdapter::updateData);
+        binding.weatherSwipeRefresh.setOnRefreshListener( () -> {
+            weatherViewModel.updateWeather();
+            binding.weatherSwipeRefresh.setRefreshing(false);
+        });
         return root;
     }
 
