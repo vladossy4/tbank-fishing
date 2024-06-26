@@ -12,8 +12,13 @@ lifecycleViewmodelKtx = "2.8.1"
 navigationFragment = "2.7.7"
 navigationUi = "2.7.7"
 swiperefreshlayout = "1.1.0"
+retrofit = "2.11.0"
+openmeteo = "1.4.0"
+
 
 [libraries]
+retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+openmeteo = { module = "com.open-meteo:sdk", version.ref = "openmeteo" }
 flexbox = { module = "com.google.android.flexbox:flexbox", version.ref = "flexbox" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }

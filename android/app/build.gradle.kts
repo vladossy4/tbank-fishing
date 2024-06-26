@@ -47,4 +47,6 @@ dependencies {
     androidTestImplementation(libs.espresso.core)
 
     implementation (libs.flexbox)
+    implementation (libs.retrofit)
+    implementation (libs.openmeteo)
 }

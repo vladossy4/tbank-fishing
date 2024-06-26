@@ -1,17 +1,37 @@
 package com.salfetka.fishing.ui.weather;
 
+import android.util.Log;
+
+import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.openmeteo.sdk.Aggregation;
+import com.openmeteo.sdk.Variable;
+import com.openmeteo.sdk.VariableWithValues;
+import com.openmeteo.sdk.VariablesSearch;
+import com.openmeteo.sdk.VariablesWithTime;
 import com.salfetka.fishing.models.weather.SunTimes;
 import com.salfetka.fishing.models.weather.UnitMeasure;
 import com.salfetka.fishing.models.weather.Weather;
+import com.salfetka.fishing.models.weather.WeatherApiService;
 import com.salfetka.fishing.models.weather.WeatherState;
 import com.salfetka.fishing.models.weather.Wind;
 
+import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import com.openmeteo.sdk.WeatherApiResponse;
 
 /** Управление данными о погоде */
 public class WeatherViewModel extends ViewModel {
@@ -25,6 +45,8 @@ public class WeatherViewModel extends ViewModel {
     private final MutableLiveData<List<Weather>> hoursWeatherList = new MutableLiveData<>();
     /** Поле, хранящее погоду по дням */
     private final MutableLiveData<List<Weather>> daysWeatherList = new MutableLiveData<>();
+
+    private static final String BASE_URL = "https://api.open-meteo.com/";
 
     public WeatherViewModel() {
         //
@@ -83,8 +105,90 @@ public class WeatherViewModel extends ViewModel {
         updateWeather();
     }
 
+    private WeatherApiService getService() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .build();
+        return retrofit.create(WeatherApiService.class);
+    }
+
     // Сюда пишешь код загрузки погоды с api
     public void updateWeather() {
+        WeatherApiService service = getService();
+
+        Call<ResponseBody> call = service.getWeatherForecast(
+                52.0625,
+                41.1875,
+                "weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset,precipitation_sum,wind_speed_10m_max,wind_direction_10m_dominant",
+                "auto",
+                10,
+                "ms",
+                "flatbuffers"
+        );
+        // Загрузка прогноза погоды на ближайшие дни
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    if (response.body() != null){
+                        try {
+                            byte[] responseIn = response.body().bytes();
+                            ByteBuffer buffer = ByteBuffer.wrap(responseIn).order(ByteOrder.LITTLE_ENDIAN);
+                            WeatherApiResponse apiResponse = WeatherApiResponse.getRootAsWeatherApiResponse((ByteBuffer) buffer.position(4));
+                            VariablesWithTime daily = apiResponse.daily();
+                            VariableWithValues weatherCode = new VariablesSearch(daily)
+                                    .variable(Variable.weather_code)
+                                    .first();
+                            VariableWithValues temperatureMax = new VariablesSearch(daily)
+                                    .variable(Variable.temperature)
+                                    .altitude(2)
+                                    .aggregation(Aggregation.maximum)
+                                    .first();
+                            VariableWithValues temperatureMin = new VariablesSearch(daily)
+                                    .variable(Variable.temperature)
+                                    .altitude(2)
+                                    .aggregation(Aggregation.minimum)
+                                    .first();
+                            VariableWithValues precipitationSum = new VariablesSearch(daily)
+                                    .variable(Variable.precipitation)
+                                    .aggregation(Aggregation.sum)
+                                    .first();
+                            VariableWithValues windOrientation = new VariablesSearch(daily)
+                                    .variable(Variable.wind_direction)
+                                    .first();
+                            VariableWithValues windSpeed = new VariablesSearch(daily)
+                                    .variable(Variable.wind_speed)
+                                    .first();
+                            Calendar now = new GregorianCalendar();
+                            ArrayList<Weather> newDaysWeatherList = new ArrayList<>();
+                            for (int i = 0; i < temperatureMin.valuesLength(); i++) {
+                                newDaysWeatherList.add(new Weather(
+                                        (Calendar) now.clone(),
+                                        0,
+                                        WeatherState.getWeatherState((int)weatherCode.values(i), false),
+                                        Math.round(temperatureMax.values(i)),
+                                        Math.round(temperatureMin.values(i)),
+                                        0,
+                                        precipitationSum.values(i),
+                                        Wind.getWindDirection(windOrientation.values(i)),
+                                        Math.round(windSpeed.values(i)),
+                                        0,
+                                        0));
+                                now.add(Calendar.DAY_OF_YEAR, 1);
+                            }
+                            daysWeatherList.setValue(newDaysWeatherList);
+                        } catch (IOException e) {
+
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable throwable) {
+
+            }
+        });
 //        Загружаешь данные о погоде и после этого создаешь объекты ниже на основе полученных данных
 //        Weather newWeather = ...
 //        SunTimes newSunTimes = ...

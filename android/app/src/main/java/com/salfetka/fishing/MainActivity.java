@@ -1,10 +1,13 @@
 package com.salfetka.fishing;
 
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
@@ -43,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
             navController.navigate(item.getItemId(), null, navOptions);
             return true;
         });
+
     }
 
 }

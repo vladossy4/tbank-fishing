@@ -58,7 +58,7 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHold
         holder.weatherIcon.setImageResource(weather.getCurrentWeather().getIcon());
         holder.windIcon.setRotation(weather.getWindOrientation().getAngle());
         holder.windOrientation.setText(weather.getWindOrientation().getShortName());
-        holder.amountOfPrecipitation.setText(String.valueOf(weather.getAmountOfPrecipitation()));
+        holder.amountOfPrecipitation.setText(String.format("%.2f", weather.getAmountOfPrecipitation()));
         holder.windSpeed.setText(String.valueOf(weather.getWindSpeed()));
     }
 

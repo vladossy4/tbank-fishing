@@ -19,7 +19,7 @@ public class Weather {
     /** Вероятность осадков */
     final int chanceOfPrecipitation;
     /** Количество осадков */
-    final int amountOfPrecipitation;
+    final float amountOfPrecipitation;
     /** Направление ветра */
     final Wind windOrientation;
     /** Скорость ветра */
@@ -41,7 +41,7 @@ public class Weather {
      * @param windSpeed Скорость ветра
      * @param humidity Влажность воздуха
      * @param pressure Атмосферное давление */
-    public Weather(Calendar weatherTime, int temperature, WeatherState currentWeather, int maxTemperature, int minTemperature, int chanceOfPrecipitation, int amountOfPrecipitation, Wind windOrientation, int windSpeed, int humidity, int pressure){
+    public Weather(Calendar weatherTime, int temperature, WeatherState currentWeather, int maxTemperature, int minTemperature, int chanceOfPrecipitation, float amountOfPrecipitation, Wind windOrientation, int windSpeed, int humidity, int pressure){
         this.weatherTime = weatherTime;
         this.temperature = temperature;
         this.currentWeather = currentWeather;
@@ -91,7 +91,7 @@ public class Weather {
         return chanceOfPrecipitation;
     }
 
-    public int getAmountOfPrecipitation() {
+    public float getAmountOfPrecipitation() {
         return amountOfPrecipitation;
     }
 
