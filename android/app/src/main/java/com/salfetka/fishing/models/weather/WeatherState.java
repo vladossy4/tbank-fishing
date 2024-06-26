@@ -29,13 +29,13 @@ public enum WeatherState {
         return icon;
     }
 
-    public static WeatherState getWeatherState(int code, boolean isNight) {
+    public static WeatherState getWeatherState(int code, boolean isDay) {
         if (code == 0 || code == 1) {
-            if (isNight) return WeatherState.ClearNight;
-            else return WeatherState.Sunny;
+            if (isDay) return WeatherState.Sunny;
+            else return WeatherState.ClearNight;
         } else if (code == 2) {
-            if (isNight) return WeatherState.PartlyCloudyNight;
-            else return WeatherState.PartlyCloudy;
+            if (isDay) return WeatherState.PartlyCloudy;
+            else return WeatherState.PartlyCloudyNight;
         } else if (code == 3) return WeatherState.Cloudy;
         else if ((code>=51 && code<=67) || (code>=80 && code<=82)) return WeatherState.Rainy;
         else if ((code>=71 && code<=77) || (code>=85 && code<=86)) return WeatherState.Snowy;

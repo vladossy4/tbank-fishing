@@ -34,6 +34,7 @@ public class WeatherFragment extends Fragment {
                 binding.lastUpdatedWeather.setText(weather.getWeatherDateTimeFormat());
                 binding.currentTemperature.setText(weather.getTemperature()+unitMeasure.getTemperatureUnit());
                 binding.currentWeather.setText(weather.getCurrentWeather().getName());
+                binding.imageCurrentWeather.setImageResource(weather.getCurrentWeather().getIcon());
                 binding.maxTemperature.setText(weather.getMaxTemperature()+unitMeasure.getTemperatureUnit());
                 binding.minTemperature.setText(weather.getMinTemperature()+unitMeasure.getTemperatureUnit());
                 binding.chanceOfPrecipitation.setText(weather.getChanceOfPrecipitation()+"%");
