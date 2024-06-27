@@ -22,6 +22,10 @@
     <string name="weather_temperature_hint">Температура воздуха</string>
     <string name="amount_of_precipitation">Количество осадков, мм</string>
     <string name="wind_speed">Скорость ветра</string>
+    <string name="wind_gust">Порывы ветра</string>
+    <string name="dew_point">Точка росы</string>
+
+    <string name="open_meteo_com">open-meteo.com</string>
 
     <string name="wind_icon_description">Направление ветра</string>
     <string name="weather_icon_description">Значок погоды</string>

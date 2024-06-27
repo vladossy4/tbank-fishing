@@ -1,8 +1,6 @@
 package com.salfetka.fishing.ui.weather;
 
 import android.annotation.SuppressLint;
-import android.icu.util.Measure;
-import android.icu.util.MeasureUnit;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,8 +26,8 @@ public class WeatherFragment extends Fragment {
 
         binding = FragmentWeatherBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+        UnitMeasure unitMeasure = weatherViewModel.getUnitMeasure().getValue();
         weatherViewModel.getWeather().observe(getViewLifecycleOwner(), weather -> {
-            UnitMeasure unitMeasure = weatherViewModel.getUnitMeasure().getValue();
             if (weather != null && unitMeasure != null) {
                 binding.lastUpdatedWeather.setText(weather.getWeatherDateTimeFormat());
                 binding.currentTemperature.setText(weather.getTemperature()+unitMeasure.getTemperatureUnit());
@@ -41,16 +39,16 @@ public class WeatherFragment extends Fragment {
                 binding.windOrientation.setText(weather.getWindOrientation().getFullName());
                 binding.imageCurrentWind.setRotation(weather.getWindOrientation().getAngle());
                 binding.windPower.setText(weather.getWindSpeed()+unitMeasure.getSpeedUnit());
-                binding.humidity.setText(weather.getHumidity()+"%");
-                binding.pressure.setText(weather.getPressure()+unitMeasure.getPressureUnit());
             }
         });
-        weatherViewModel.getSunTimes().observe(getViewLifecycleOwner(), sunTimes -> {
-            if (sunTimes != null){
-                binding.dawn.setText(sunTimes.getDawn());
-                binding.sunrise.setText(sunTimes.getSunrise());
-                binding.sunset.setText(sunTimes.getSunset());
-                binding.twilight.setText(sunTimes.getTwilight());
+        weatherViewModel.getOtherWeather().observe(getViewLifecycleOwner(), otherWeather -> {
+            if (otherWeather != null && unitMeasure != null){
+                binding.windGust.setText(otherWeather.getWindGust()+unitMeasure.getSpeedUnit());
+                binding.pressure.setText(otherWeather.getPressure()+unitMeasure.getPressureUnit());
+                binding.humidity.setText(otherWeather.getHumidity()+"%");
+                binding.dewPoint.setText(otherWeather.getDewPoint()+unitMeasure.getTemperatureUnit());
+                binding.sunrise.setText(otherWeather.getSunriseString());
+                binding.sunset.setText(otherWeather.getSunsetString());
             }
         });
         final WeatherAdapter hoursAdapter = new WeatherAdapter(getContext(), weatherViewModel.getHoursWeatherList().getValue(), false);
