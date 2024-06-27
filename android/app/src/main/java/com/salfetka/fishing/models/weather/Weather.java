@@ -24,10 +24,6 @@ public class Weather {
     final Wind windOrientation;
     /** Скорость ветра */
     final int windSpeed;
-    /** Влажность воздуха */
-    final int humidity;
-    /** Атмосферное давление */
-    final int pressure;
 
     /** Создание данных о состоянии погоды
      * @param weatherTime Время, на которое был выполнен прогноз погоды
@@ -38,10 +34,8 @@ public class Weather {
      * @param chanceOfPrecipitation Вероятность осадков
      * @param amountOfPrecipitation Количество осадков
      * @param windOrientation Направление ветра
-     * @param windSpeed Скорость ветра
-     * @param humidity Влажность воздуха
-     * @param pressure Атмосферное давление */
-    public Weather(Calendar weatherTime, int temperature, WeatherState currentWeather, int maxTemperature, int minTemperature, int chanceOfPrecipitation, float amountOfPrecipitation, Wind windOrientation, int windSpeed, int humidity, int pressure){
+     * @param windSpeed Скорость ветра */
+    public Weather(Calendar weatherTime, int temperature, WeatherState currentWeather, int maxTemperature, int minTemperature, int chanceOfPrecipitation, float amountOfPrecipitation, Wind windOrientation, int windSpeed){
         this.weatherTime = weatherTime;
         this.temperature = temperature;
         this.currentWeather = currentWeather;
@@ -51,8 +45,6 @@ public class Weather {
         this.amountOfPrecipitation = amountOfPrecipitation;
         this.windOrientation = windOrientation;
         this.windSpeed = windSpeed;
-        this.humidity = humidity;
-        this.pressure = pressure;
     }
 
     public Calendar getWeatherTime() {
@@ -60,11 +52,11 @@ public class Weather {
     }
 
     public String getWeatherDateTimeFormat() {
-        return DateFormatter.format(weatherTime, "d MMM k:mm");
+        return DateFormatter.format(weatherTime, "d MMM HH:mm");
     }
 
     public String getWeatherHourFormat() {
-        return DateFormatter.format(weatherTime, "k:00");
+        return DateFormatter.format(weatherTime, "HH:00");
     }
 
     public String getWeatherDayFormat() {
@@ -103,11 +95,4 @@ public class Weather {
         return windSpeed;
     }
 
-    public int getHumidity() {
-        return humidity;
-    }
-
-    public int getPressure() {
-        return pressure;
-    }
 }

@@ -1,7 +1,5 @@
 package com.salfetka.fishing.ui.weather;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -11,7 +9,7 @@ import com.openmeteo.sdk.Variable;
 import com.openmeteo.sdk.VariableWithValues;
 import com.openmeteo.sdk.VariablesSearch;
 import com.openmeteo.sdk.VariablesWithTime;
-import com.salfetka.fishing.models.weather.SunTimes;
+import com.salfetka.fishing.models.weather.OtherWeather;
 import com.salfetka.fishing.models.weather.UnitMeasure;
 import com.salfetka.fishing.models.weather.Weather;
 import com.salfetka.fishing.models.weather.WeatherApiService;
@@ -25,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.TimeZone;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -40,7 +39,7 @@ public class WeatherViewModel extends ViewModel {
     /** Поле, хранящее текущую погоду */
     private final MutableLiveData<Weather> weather = new MutableLiveData<>();
     /** Поле, хранящее сведения о восходе и заходе солнца */
-    private final MutableLiveData<SunTimes> sunTimes = new MutableLiveData<>();
+    private final MutableLiveData<OtherWeather> otherWeather = new MutableLiveData<>();
     /** Поле, хранящее погоду по часам */
     private final MutableLiveData<List<Weather>> hoursWeatherList = new MutableLiveData<>();
     /** Поле, хранящее погоду по дням */
@@ -53,14 +52,9 @@ public class WeatherViewModel extends ViewModel {
     private double latitude;
     /** Географическая долгота */
     private double longitude;
+
     public WeatherViewModel() {
         unitMeasure.setValue(new UnitMeasure("°C", "м/с", "мбар"));
-        sunTimes.setValue(new SunTimes(
-                "02:37",
-                "03:35",
-                "20:58",
-                "21:56"
-        ));
         updateWeather();
     }
 
@@ -76,10 +70,28 @@ public class WeatherViewModel extends ViewModel {
         latitude = 52.063;
         longitude = 41.1678;
         updateCurrentWeather();
-        updateHoursWeatherList();
         updateDaysWeatherList();
+        updateHoursWeatherList();
     }
 
+    private boolean isDay(Calendar time) {
+        Calendar sunrise;
+        Calendar sunset;
+        if (otherWeather.getValue() != null) {
+            sunrise = otherWeather.getValue().getSunrise();
+            sunset = otherWeather.getValue().getSunset();
+        }
+        else {
+            sunrise = new GregorianCalendar();
+            sunrise.set(Calendar.HOUR_OF_DAY, 8);
+            sunset = new GregorianCalendar();
+            sunset.set(Calendar.HOUR_OF_DAY, 20);
+        }
+        return (time.get(Calendar.HOUR_OF_DAY) > sunrise.get(Calendar.HOUR_OF_DAY))
+                && (time.get(Calendar.HOUR_OF_DAY) <= sunset.get(Calendar.HOUR_OF_DAY));
+    }
+
+    /** Обновление текущего состояния погоды */
     private void updateCurrentWeather() {
         // Подготавливаем запрос для загрузки текущего прогноза погоды
         Call<ResponseBody> currentWeather = service.getWeatherCurrentForecast(
@@ -87,7 +99,7 @@ public class WeatherViewModel extends ViewModel {
                 longitude,
                 "temperature_2m,relative_humidity_2m,precipitation,weather_code,surface_pressure,wind_speed_10m,wind_direction_10m,wind_gusts_10m",
                 "dew_point_2m,precipitation_probability",
-                "temperature_2m_max,temperature_2m_min,sunrise,sunset,precipitation_probability_max",
+                "temperature_2m_max,temperature_2m_min,sunrise,sunset",
                 "auto",
                 1,
                 "ms",
@@ -107,10 +119,25 @@ public class WeatherViewModel extends ViewModel {
                                 VariablesWithTime current = apiResponse.current();
                                 VariablesWithTime hourly = apiResponse.hourly();
                                 VariablesWithTime daily = apiResponse.daily();
+                                Calendar sunrise = new GregorianCalendar();
+                                sunrise.setTimeInMillis(new VariablesSearch(daily).variable(Variable.sunrise).first().valuesInt64(0)*1000L);
+                                Calendar sunset = new GregorianCalendar();
+                                sunset.setTimeInMillis(new VariablesSearch(daily).variable(Variable.sunset).first().valuesInt64(0)*1000L);
+                                Calendar now = new GregorianCalendar();
+                                int hourlyIndex = now.get(Calendar.HOUR_OF_DAY);
+                                OtherWeather currentOtherWeather = new OtherWeather(
+                                        sunrise,
+                                        sunset,
+                                        Math.round(new VariablesSearch(current).variable(Variable.relative_humidity).first().value()),
+                                        Math.round(new VariablesSearch(current).variable(Variable.surface_pressure).first().value()),
+                                        Math.round(new VariablesSearch(current).variable(Variable.wind_gusts).first().value()),
+                                        Math.round(new VariablesSearch(hourly).variable(Variable.dew_point).first().values(hourlyIndex))
+                                );
+                                otherWeather.setValue(currentOtherWeather);
                                 Weather currentWeather = new Weather(
-                                        new GregorianCalendar(),
+                                        now,
                                         Math.round(new VariablesSearch(current).variable(Variable.temperature).first().value()),
-                                        WeatherState.getWeatherState((int)new VariablesSearch(current).variable(Variable.weather_code).first().value(), true),
+                                        WeatherState.getWeatherState((int)new VariablesSearch(current).variable(Variable.weather_code).first().value(), isDay(now)),
                                         Math.round(new VariablesSearch(daily)
                                                 .variable(Variable.temperature).aggregation(Aggregation.maximum)
                                                 .first().values(0)),
@@ -118,12 +145,10 @@ public class WeatherViewModel extends ViewModel {
                                                 .variable(Variable.temperature).aggregation(Aggregation.minimum)
                                                 .first().values(0)),
                                         Math.round(new VariablesSearch(hourly)
-                                                .variable(Variable.precipitation_probability).first().values(0)),
+                                                .variable(Variable.precipitation_probability).first().values(hourlyIndex)),
                                         new VariablesSearch(current).variable(Variable.precipitation).first().value(),
                                         Wind.getWindDirection(new VariablesSearch(current).variable(Variable.wind_direction).first().value()),
-                                        Math.round(new VariablesSearch(current).variable(Variable.wind_speed).first().value()),
-                                        Math.round(new VariablesSearch(current).variable(Variable.relative_humidity).first().value()),
-                                        Math.round(new VariablesSearch(current).variable(Variable.surface_pressure).first().value())
+                                        Math.round(new VariablesSearch(current).variable(Variable.wind_speed).first().value())
                                 );
                                 weather.setValue(currentWeather);
                                 buffer.clear();
@@ -142,6 +167,7 @@ public class WeatherViewModel extends ViewModel {
         });
     }
 
+    /** Обработка данных для списка состояний погоды по часам и по дням */
     private ArrayList<Weather> processingWeatherList(VariablesWithTime weather, int stepTime, boolean isHourly) {
         VariableWithValues weatherCode = new VariablesSearch(weather)
                 .variable(Variable.weather_code).first();
@@ -172,26 +198,28 @@ public class WeatherViewModel extends ViewModel {
                     .aggregation(Aggregation.sum).first();
         }
         Calendar now = new GregorianCalendar();
+        now.set(Calendar.MINUTE, 0);
+        if (isHourly) now.set(Calendar.HOUR_OF_DAY, 0);
+        else now.set(Calendar.HOUR_OF_DAY, 12);
         ArrayList<Weather> newWeatherList = new ArrayList<>();
         for (int i = 0; i < weatherCode.valuesLength(); i++) {
             //boolean isDay = (isHourly)? now. : true;
             newWeatherList.add(new Weather(
                     (Calendar) now.clone(),
                     (isHourly)? Math.round(temperature.values(i)) : 0,
-                    WeatherState.getWeatherState((int)weatherCode.values(i), true),
+                    WeatherState.getWeatherState((int)weatherCode.values(i), isDay(now)),
                     (!isHourly)? Math.round(temperatureMax.values(i)) : 0,
                     (!isHourly)? Math.round(temperatureMin.values(i)) : 0,
                     0,
                     precipitationSum.values(i),
                     Wind.getWindDirection(windOrientation.values(i)),
-                    Math.round(windSpeed.values(i)),
-                    0,
-                    0));
+                    Math.round(windSpeed.values(i))));
             now.add(stepTime, 1);
         }
         return newWeatherList;
     }
 
+    /** Обновление прогноза погоды на ближайшие часы */
     private void updateHoursWeatherList() {
         // Подготавливаем запрос для загрузки прогноза погоды на 72 часа
         Call<ResponseBody> weatherHours = service.getWeatherHoursForecast(
@@ -233,6 +261,7 @@ public class WeatherViewModel extends ViewModel {
         });
     }
 
+    /** Обновление прогноза погоды на ближайшие дни */
     private void updateDaysWeatherList() {
         // Подготавливаем запрос для загрузки прогноза погоды на 10 дней
         Call<ResponseBody> weatherDays = service.getWeatherDaysForecast(
@@ -280,8 +309,8 @@ public class WeatherViewModel extends ViewModel {
     public MutableLiveData<UnitMeasure> getUnitMeasure() {
         return unitMeasure;
     }
-    public MutableLiveData<SunTimes> getSunTimes() {
-        return sunTimes;
+    public MutableLiveData<OtherWeather> getOtherWeather() {
+        return otherWeather;
     }
     public MutableLiveData<List<Weather>> getHoursWeatherList() {
         return hoursWeatherList;
