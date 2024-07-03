@@ -2,21 +2,75 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fishingSecret"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.wiki.WikiFragment">
 
-    <TextView
-        android:id="@+id/text_dashboard"
-        android:layout_width="match_parent"
+
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints,UselessLeaf" />
+
+    <ScrollView
+        android:id="@+id/scrollwiew"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="Image"
+        tools:ignore="HardcodedText">
+
+        <LinearLayout
+            android:id="@+id/linerl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            tools:ignore="MissingConstraints,UselessLeaf">
+
+            <ImageView
+                android:id="@+id/learnFishing"
+                android:layout_width="wrap_content"
+                android:layout_height="470dp"
+                android:src="@drawable/__page_0002"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:id="@+id/fishingBait"
+                android:layout_width="wrap_content"
+                android:layout_height="470dp"
+                android:src="@drawable/__page_0003"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:id="@+id/secretFishing"
+                android:layout_width="wrap_content"
+                android:layout_height="470dp"
+                android:src="@drawable/__page_0001"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:id="@+id/fishingCrap"
+                android:layout_width="match_parent"
+                android:layout_height="470dp"
+                android:src="@drawable/__page_0004"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:id="@+id/fishingBaikal"
+                android:layout_width="match_parent"
+                android:layout_height="470dp"
+                android:src="@drawable/__page_0005"
+                tools:ignore="ContentDescription" />
+
+        </LinearLayout>
+    </ScrollView>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+

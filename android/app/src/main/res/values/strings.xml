@@ -33,7 +33,7 @@
 
     <string name="chat_menu_copy">Копировать текст</string>
     <string name="chat_menu_deselect">Снять выделение</string>
-
+    <string name="recomendation">Советы для начинающих</string>
     <string name="profile_login_guest">Вы вошли как гость</string>
     <string name="profile_login">Вход</string>
     <string name="profile_logout">Выход</string>
