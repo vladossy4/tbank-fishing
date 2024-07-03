@@ -13,9 +13,18 @@
         android:layout_height="match_parent">
 
         <LinearLayout
+            android:id="@+id/weather_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                android:id="@+id/locationPicker"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:hint="Введите город"
+                android:layout_margin="8dp"/>
 
             <com.google.android.flexbox.FlexboxLayout
                 android:layout_width="match_parent"

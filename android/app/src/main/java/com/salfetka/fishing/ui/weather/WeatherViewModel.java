@@ -1,14 +1,18 @@
 package com.salfetka.fishing.ui.weather;
 
+import android.content.Context;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.google.gson.reflect.TypeToken;
 import com.openmeteo.sdk.Aggregation;
 import com.openmeteo.sdk.Variable;
 import com.openmeteo.sdk.VariableWithValues;
 import com.openmeteo.sdk.VariablesSearch;
 import com.openmeteo.sdk.VariablesWithTime;
+import com.salfetka.fishing.models.SharedPreferencesHelper;
 import com.salfetka.fishing.models.weather.OtherWeather;
 import com.salfetka.fishing.models.weather.UnitMeasure;
 import com.salfetka.fishing.models.weather.Weather;
@@ -46,16 +50,18 @@ public class WeatherViewModel extends ViewModel {
     private final MutableLiveData<List<Weather>> daysWeatherList = new MutableLiveData<>();
     /** Адрес сайта для загрузки прогноза погоды */
     private static final String BASE_URL = "https://api.open-meteo.com/";
-    /** Retrofit сервис для загрузки данных о погоде */
-    private final WeatherApiService service = getService();
     /** Географическая широта */
     private double latitude;
     /** Географическая долгота */
     private double longitude;
+    private Context context;
 
     public WeatherViewModel() {
         unitMeasure.setValue(new UnitMeasure("°C", "м/с", "мбар"));
-        updateWeather();
+    }
+
+    public void setContext(Context context) {
+        this.context = context;
     }
 
     private WeatherApiService getService() {
@@ -65,10 +71,21 @@ public class WeatherViewModel extends ViewModel {
         return retrofit.create(WeatherApiService.class);
     }
 
+    public void setLocation(double latitude, double longitude){
+        this.latitude = latitude;
+        this.longitude = longitude;
+        updateWeather();
+    }
+
     public void updateWeather() {
-        // Загрузка координат местности
-        latitude = 52.063;
-        longitude = 41.1678;
+        Weather loadedWeather = SharedPreferencesHelper.getObject(context, "weather_current", Weather.class);
+        OtherWeather loadedOther = SharedPreferencesHelper.getObject(context, "weather_other", OtherWeather.class);
+        List<Weather> loadedHours = SharedPreferencesHelper.getObjectList(context, "weather_hours", new TypeToken<List<Weather>>() {}.getType());
+        List<Weather> loadedDays = SharedPreferencesHelper.getObjectList(context, "weather_days", new TypeToken<List<Weather>>() {}.getType());
+        if (loadedWeather != null) weather.setValue(loadedWeather);
+        if (loadedOther != null) otherWeather.setValue(loadedOther);
+        if (loadedHours != null) hoursWeatherList.setValue(loadedHours);
+        if (loadedDays != null) daysWeatherList.setValue(loadedDays);
         updateCurrentWeather();
         updateDaysWeatherList();
         updateHoursWeatherList();
@@ -93,6 +110,7 @@ public class WeatherViewModel extends ViewModel {
 
     /** Обновление текущего состояния погоды */
     private void updateCurrentWeather() {
+        WeatherApiService service = getService();
         // Подготавливаем запрос для загрузки текущего прогноза погоды
         Call<ResponseBody> currentWeather = service.getWeatherCurrentForecast(
                 latitude,
@@ -151,6 +169,8 @@ public class WeatherViewModel extends ViewModel {
                                         Math.round(new VariablesSearch(current).variable(Variable.wind_speed).first().value())
                                 );
                                 weather.setValue(currentWeather);
+                                SharedPreferencesHelper.saveObject(context, "weather_current", weather.getValue());
+                                SharedPreferencesHelper.saveObject(context, "weather_other", otherWeather.getValue());
                                 buffer.clear();
                             } catch (IOException e) {
 
@@ -221,6 +241,7 @@ public class WeatherViewModel extends ViewModel {
 
     /** Обновление прогноза погоды на ближайшие часы */
     private void updateHoursWeatherList() {
+        WeatherApiService service = getService();
         // Подготавливаем запрос для загрузки прогноза погоды на 72 часа
         Call<ResponseBody> weatherHours = service.getWeatherHoursForecast(
                 latitude,
@@ -245,6 +266,7 @@ public class WeatherViewModel extends ViewModel {
                                 VariablesWithTime hourly = apiResponse.hourly();
                                 ArrayList<Weather> newHoursWeatherList = processingWeatherList(hourly, Calendar.HOUR, true);
                                 hoursWeatherList.setValue(newHoursWeatherList);
+                                SharedPreferencesHelper.saveObject(context, "weather_hours", hoursWeatherList.getValue());
                                 buffer.clear();
                             } catch (IOException e) {
 
@@ -263,6 +285,7 @@ public class WeatherViewModel extends ViewModel {
 
     /** Обновление прогноза погоды на ближайшие дни */
     private void updateDaysWeatherList() {
+        WeatherApiService service = getService();
         // Подготавливаем запрос для загрузки прогноза погоды на 10 дней
         Call<ResponseBody> weatherDays = service.getWeatherDaysForecast(
                 latitude,
@@ -287,6 +310,7 @@ public class WeatherViewModel extends ViewModel {
                                 VariablesWithTime daily = apiResponse.daily();
                                 ArrayList<Weather> newDaysWeatherList = processingWeatherList(daily, Calendar.DAY_OF_YEAR, false);
                                 daysWeatherList.setValue(newDaysWeatherList);
+                                SharedPreferencesHelper.saveObject(context, "weather_days", daysWeatherList.getValue());
                                 buffer.clear();
                             } catch (IOException e) {
 
@@ -302,7 +326,6 @@ public class WeatherViewModel extends ViewModel {
             }
         });
     }
-
     public MutableLiveData<Weather> getWeather() {
         return weather;
     }
@@ -317,5 +340,9 @@ public class WeatherViewModel extends ViewModel {
     }
     public MutableLiveData<List<Weather>> getDaysWeatherList() {
         return daysWeatherList;
+    }
+
+    public void setWeather(Weather weather) {
+        this.weather.setValue(weather);
     }
 }

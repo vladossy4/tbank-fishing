@@ -49,4 +49,6 @@ dependencies {
     implementation (libs.flexbox)
     implementation (libs.retrofit)
     implementation (libs.openmeteo)
+    implementation(libs.gson)
+    implementation (libs.converter.gson)
 }

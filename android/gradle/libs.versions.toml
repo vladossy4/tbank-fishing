@@ -1,6 +1,8 @@
 [versions]
 agp = "8.5.0"
+converterGson = "2.11.0"
 flexbox = "3.0.0"
+gson = "2.10.1"
 junit = "4.13.2"
 junitVersion = "1.1.5"
 espressoCore = "3.5.1"
@@ -14,10 +16,11 @@ navigationUi = "2.7.7"
 swiperefreshlayout = "1.1.0"
 retrofit = "2.11.0"
 openmeteo = "1.4.0"
-places = "3.5.0"
 
 
 [libraries]
+converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
+gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 openmeteo = { module = "com.open-meteo:sdk", version.ref = "openmeteo" }
 flexbox = { module = "com.google.android.flexbox:flexbox", version.ref = "flexbox" }
